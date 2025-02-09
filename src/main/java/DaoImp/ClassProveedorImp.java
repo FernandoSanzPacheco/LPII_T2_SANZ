@@ -31,12 +31,38 @@ public class ClassProveedorImp implements IProveedor {
 	}	// fin del metodo registrar
 
 	public void ActualizarProveedor(TblProveedorcl2 tblproveedorcl2) {
-		// TODO Auto-generated method stub
+		
+		// nos conectamos con la unidad de persistencia...
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("ProyectoJPAMavenT2Sanz");
+		EntityManager em=emf.createEntityManager();
+		//iniciamos la transaccion...
+		em.getTransaction().begin();
+		//actualizamos
+		em.merge(tblproveedorcl2);
+		//emitimos mensaje por consola
+		System.out.println("Datos actualizados correctamente ");
+		//confirmamos
+		em.getTransaction().commit();
+		//cerramos
+		em.close();
 		
 	}	// fin del metodo actualizar
 
 	public void EliminarProveedor(TblProveedorcl2 tblproveedorcl2) {
-		// TODO Auto-generated method stub
+		
+		///establecemos conexion con la unidad de persistencia...
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("ProyectoJPAMavenT2Sanz");
+		//gestionamos las entidades...
+		EntityManager em=emf.createEntityManager();
+		//iniciamos la transaccion...
+		em.getTransaction().begin();
+		//recuperar el codigo a eliminar...
+		TblProveedorcl2 tblprov=em.merge(tblproveedorcl2);
+		//procedemos a eliminar
+		em.remove(tblprov);
+		System.out.println("Dato eliminado exitosamente");
+		em.getTransaction().commit();
+		em.close();	
 		
 	}	// fin del metodo eliminar
 
@@ -60,8 +86,22 @@ public class ClassProveedorImp implements IProveedor {
 	}	// fin del metodo listar
 
 	public TblProveedorcl2 BuscarProveedor(TblProveedorcl2 tblproveedorcl2) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// establecemos conexion con la unidad de persistencia...
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("ProyectoJPAMavenT2Sanz");
+		//para administrar la transacciones
+		EntityManager em=emf.createEntityManager();
+		//iniciamos la transaccion...
+		em.getTransaction().begin();
+		//recuperamos el codigo a buscar...
+		TblProveedorcl2 tblprov=em.find(TblProveedorcl2.class,tblproveedorcl2.getIdproveedorcl2());
+		//confirmamos la transaccion
+		em.getTransaction().commit();
+		//cerramos la transaccion.
+		em.close();
+		//retornamos el registro solicitado..
+		return tblprov;
+		
 	}	// fin del metodo buscar
 	
 	
